@@ -1,5 +1,12 @@
 [
     {
+        "id": "b31e54e4.909fa8",
+        "type": "tab",
+        "label": "画像アップロード",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "23350820.888988",
         "type": "tab",
         "label": "感情認識",
@@ -14,9 +21,9 @@
         "info": ""
     },
     {
-        "id": "b31e54e4.909fa8",
+        "id": "9c32f896.f45c08",
         "type": "tab",
-        "label": "master",
+        "label": "白け判定",
         "disabled": false,
         "info": ""
     },
@@ -28,16 +35,9 @@
         "info": ""
     },
     {
-        "id": "9c32f896.f45c08",
+        "id": "5af3bc01.39170c",
         "type": "tab",
-        "label": "白け判定",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "c59f1e42.9535a",
-        "type": "tab",
-        "label": "send テスト",
+        "label": "音声認識",
         "disabled": false,
         "info": ""
     },
@@ -45,7 +45,7 @@
         "id": "c1f256d0.285b98",
         "type": "websocket-listener",
         "z": "",
-        "path": "/websocket/command",
+        "path": "/myaudio",
         "wholemsg": "false"
     },
     {
@@ -72,7 +72,7 @@
         "type": "debug",
         "z": "23350820.888988",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "false",
         "x": 390,
@@ -320,7 +320,7 @@
         "type": "debug",
         "z": "23350820.888988",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "payload",
         "x": 531,
@@ -388,7 +388,7 @@
         "type": "debug",
         "z": "15cd476.975e8b9",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "true",
         "x": 550,
@@ -462,8 +462,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1213,
-        "y": 694,
+        "x": 1247,
+        "y": 673,
         "wires": []
     },
     {
@@ -532,11 +532,11 @@
         "type": "debug",
         "z": "23350820.888988",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "payload",
-        "x": 1246,
-        "y": 750,
+        "x": 1268,
+        "y": 753,
         "wires": []
     },
     {
@@ -609,12 +609,12 @@
         "method": "post",
         "upload": true,
         "swaggerDoc": "",
-        "x": 110,
-        "y": 180,
+        "x": 190,
+        "y": 131,
         "wires": [
             [
                 "4e6451ee.e6b8e",
-                "45f41fb0.4b526"
+                "e74280f2.d46c8"
             ]
         ]
     },
@@ -625,20 +625,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 310,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "45f41fb0.4b526",
-        "type": "debug",
-        "z": "b31e54e4.909fa8",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "true",
-        "x": 310,
-        "y": 220,
+        "x": 414,
+        "y": 176,
         "wires": []
     },
     {
@@ -677,7 +665,7 @@
         "type": "debug",
         "z": "eddaa714.878c58",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "false",
         "x": 410,
@@ -725,8 +713,8 @@
         "func": "msg.headers = {\n    \"Content-type\": \"application/octet-stream\",\n    \"Ocp-Apim-Subscription-Key\": \"2fb9baa6cfe34c2395fff59da6ac7594\"\n};\nmsg.payload = msg.req.files[0].buffer;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 227,
-        "y": 622,
+        "x": 230,
+        "y": 620,
         "wires": [
             [
                 "5dae3f76.9f11e",
@@ -751,7 +739,7 @@
         "type": "function",
         "z": "23350820.888988",
         "name": "成功",
-        "func": "msg.payload = JSON.stringify(msg.result.emotions, null, 2);\nreturn msg;\n",
+        "func": "//msg.payload = JSON.stringify(msg.result.emotions, null, 2);\nmsg.payload = msg.result;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 1072.5,
@@ -759,7 +747,8 @@
         "wires": [
             [
                 "91b4375f.cf8e68",
-                "c45a7baa.038c48"
+                "c45a7baa.038c48",
+                "d9357820.93ab58"
             ]
         ]
     },
@@ -773,8 +762,8 @@
         "service": "node-red-001-cloudantNoSQLDB",
         "payonly": false,
         "operation": "insert",
-        "x": 315.5,
-        "y": 935,
+        "x": 550,
+        "y": 980,
         "wires": []
     },
     {
@@ -821,7 +810,7 @@
         "z": "23350820.888988",
         "name": "遠藤",
         "topic": "",
-        "payload": "{   \"uid\": 2,   \"name\": \"遠藤\",   \"position\": { \"left\": 154, \"top\": 320 } }",
+        "payload": "{\"_id\":\"0\",\"payload\":{\"uid\":0,\"count\":0,\"name\":\"遠藤\",\"position\":{\"left\":154,\"top\":320}}}",
         "payloadType": "json",
         "repeat": "",
         "crontab": "",
@@ -830,7 +819,7 @@
         "y": 955,
         "wires": [
             [
-                "c770674e.d93f58"
+                "97492a6e.fd8768"
             ]
         ]
     },
@@ -1014,7 +1003,7 @@
         "type": "debug",
         "z": "23350820.888988",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "true",
         "x": 623.5,
@@ -1026,12 +1015,15 @@
         "type": "link in",
         "z": "9c32f896.f45c08",
         "name": "facesAndEmotions",
-        "links": [],
-        "x": 198,
-        "y": 171,
+        "links": [
+            "d9357820.93ab58"
+        ],
+        "x": 171,
+        "y": 439,
         "wires": [
             [
-                "ef0e7e68.da4e4"
+                "411b19cc.13c2c8",
+                "f1308f16.2ddf3"
             ]
         ]
     },
@@ -1041,8 +1033,8 @@
         "z": "9c32f896.f45c08",
         "name": "soundEvents",
         "links": [],
-        "x": 198,
-        "y": 111,
+        "x": 182,
+        "y": 76,
         "wires": [
             [
                 "ef0e7e68.da4e4"
@@ -1055,18 +1047,18 @@
         "z": "9c32f896.f45c08",
         "name": "物音認識",
         "info": "",
-        "x": 103,
-        "y": 135,
+        "x": 100,
+        "y": 77,
         "wires": []
     },
     {
         "id": "dd2579a7.b9b408",
         "type": "comment",
         "z": "9c32f896.f45c08",
-        "name": "表情認識",
+        "name": "感情認識",
         "info": "",
-        "x": 101.5,
-        "y": 190,
+        "x": 83.5,
+        "y": 440,
         "wires": []
     },
     {
@@ -1075,15 +1067,15 @@
         "z": "9c32f896.f45c08",
         "name": "粗相認識",
         "info": "",
-        "x": 103,
-        "y": 235,
+        "x": 99,
+        "y": 128,
         "wires": []
     },
     {
         "id": "ef0e7e68.da4e4",
         "type": "join",
         "z": "9c32f896.f45c08",
-        "name": "1秒毎に認識結果を統合",
+        "name": "物音・粗相で発火",
         "mode": "custom",
         "build": "merged",
         "property": "payload",
@@ -1092,13 +1084,14 @@
         "joiner": "\\n",
         "joinerType": "str",
         "accumulate": false,
-        "timeout": "1",
-        "count": "",
-        "x": 392,
-        "y": 169,
+        "timeout": "",
+        "count": "1",
+        "x": 348,
+        "y": 92,
         "wires": [
             [
-                "47cad304.4d0bec"
+                "47cad304.4d0bec",
+                "70c6ad36.a7cfe4"
             ]
         ]
     },
@@ -1108,8 +1101,8 @@
         "z": "9c32f896.f45c08",
         "name": "sosou",
         "links": [],
-        "x": 194,
-        "y": 233,
+        "x": 183,
+        "y": 126,
         "wires": [
             [
                 "ef0e7e68.da4e4"
@@ -1124,8 +1117,8 @@
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 501,
-        "y": 208,
+        "x": 476,
+        "y": 148,
         "wires": [
             [
                 "6f9d52db.7759cc"
@@ -1142,15 +1135,21 @@
         "rules": [
             {
                 "t": "cont",
-                "v": "payload.dede-n",
-                "vt": "msg"
+                "v": "play",
+                "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "true",
-        "outputs": 1,
-        "x": 492,
-        "y": 250,
+        "outputs": 2,
+        "x": 488,
+        "y": 222,
         "wires": [
+            [
+                "7b0928a2.0c9978"
+            ],
             [
                 "7b0928a2.0c9978"
             ]
@@ -1161,9 +1160,12 @@
         "type": "link out",
         "z": "9c32f896.f45c08",
         "name": "outSirake",
-        "links": [],
-        "x": 344,
-        "y": 293,
+        "links": [
+            "34b9c058.d79c4",
+            "f14a326c.6b2f3"
+        ],
+        "x": 726,
+        "y": 244,
         "wires": []
     },
     {
@@ -1172,8 +1174,8 @@
         "z": "9c32f896.f45c08",
         "name": "デデーン 実行",
         "info": "",
-        "x": 440,
-        "y": 293,
+        "x": 780,
+        "y": 286,
         "wires": []
     },
     {
@@ -1240,44 +1242,260 @@
         ]
     },
     {
-        "id": "2cb4e0d3.665b7",
-        "type": "http in",
-        "z": "c59f1e42.9535a",
-        "name": "",
-        "url": "/_sendImage2",
-        "method": "post",
-        "upload": true,
-        "swaggerDoc": "",
-        "x": 210,
-        "y": 140,
+        "id": "fe71061b.1f9cf8",
+        "type": "inject",
+        "z": "9c32f896.f45c08",
+        "name": "河口アウト",
+        "topic": "",
+        "payload": "{\"play\":\"dede-n\",\"speech\":\"河口  アウト\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 120.5,
+        "y": 224,
         "wires": [
             [
-                "686cbd41.5b7484",
-                "f813dc29.f7bb"
+                "ef0e7e68.da4e4"
             ]
         ]
     },
     {
-        "id": "686cbd41.5b7484",
-        "type": "http response",
-        "z": "c59f1e42.9535a",
+        "id": "70c6ad36.a7cfe4",
+        "type": "debug",
+        "z": "9c32f896.f45c08",
         "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 468.5,
-        "y": 148,
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 669.5,
+        "y": 74,
         "wires": []
     },
     {
-        "id": "f813dc29.f7bb",
+        "id": "f14a326c.6b2f3",
+        "type": "link in",
+        "z": "eddaa714.878c58",
+        "name": "commandFromShirake",
+        "links": [
+            "7b0928a2.0c9978"
+        ],
+        "x": 195,
+        "y": 100,
+        "wires": [
+            [
+                "e3eb313f.44555"
+            ]
+        ]
+    },
+    {
+        "id": "d9357820.93ab58",
+        "type": "link out",
+        "z": "23350820.888988",
+        "name": "OUT_感情認識",
+        "links": [
+            "d4169f42.24985"
+        ],
+        "x": 1206.5,
+        "y": 594,
+        "wires": []
+    },
+    {
+        "id": "411b19cc.13c2c8",
         "type": "debug",
-        "z": "c59f1e42.9535a",
+        "z": "9c32f896.f45c08",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 302.5,
+        "y": 493,
+        "wires": []
+    },
+    {
+        "id": "f1308f16.2ddf3",
+        "type": "function",
+        "z": "9c32f896.f45c08",
+        "name": "感情が激しい人を見つける",
+        "func": "\nvar flag = false\nvar outName = \"\"\n\nfor (let persons of msg.payload.emotions) {\n  for (let key in persons) {\n    if (key != 'faceNeutral' && persons[key] >= 0.7) {\n      flag = true\n      outName += \"  \" + persons['name']\n    }\n  }\n}\n\nmsg['extremeEmo'] = flag\nmsg['payload'] = {\"play\":\"dede-n\", \"speech\": outName + \" アウト\"}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 351.5,
+        "y": 439,
+        "wires": [
+            [
+                "3ae8b462.5df1ac"
+            ]
+        ]
+    },
+    {
+        "id": "d6a1f612.47c608",
+        "type": "debug",
+        "z": "9c32f896.f45c08",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload.speech",
+        "x": 650,
+        "y": 416,
+        "wires": []
+    },
+    {
+        "id": "3ae8b462.5df1ac",
+        "type": "switch",
+        "z": "9c32f896.f45c08",
+        "name": "Are there extreme emo persons ?",
+        "property": "extremeEmo",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 395.5,
+        "y": 371,
+        "wires": [
+            [
+                "7b0928a2.0c9978",
+                "d6a1f612.47c608"
+            ]
+        ]
+    },
+    {
+        "id": "ef38ce8e.19274",
+        "type": "inject",
+        "z": "9c32f896.f45c08",
+        "name": "姉川アウト",
+        "topic": "",
+        "payload": "{\"play\":\"dede-n\",\"speech\":\"姉川  アウト\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 119,
+        "y": 270,
+        "wires": [
+            [
+                "ef0e7e68.da4e4"
+            ]
+        ]
+    },
+    {
+        "id": "3b7d1c0c.efde34",
+        "type": "inject",
+        "z": "9c32f896.f45c08",
+        "name": "福地アウト",
+        "topic": "",
+        "payload": "{\"play\":\"dede-n\",\"speech\":\"福地  アウト\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 119,
+        "y": 318,
+        "wires": [
+            [
+                "ef0e7e68.da4e4"
+            ]
+        ]
+    },
+    {
+        "id": "97492a6e.fd8768",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "変換",
+        "func": "msg = msg.payload\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 1020,
+        "wires": [
+            [
+                "c770674e.d93f58"
+            ]
+        ]
+    },
+    {
+        "id": "16212ad7.50dddd",
+        "type": "watson-speech-to-text",
+        "z": "5af3bc01.39170c",
+        "name": "",
+        "alternatives": 1,
+        "speakerlabels": true,
+        "smartformatting": false,
+        "lang": "",
+        "langhidden": "",
+        "langcustom": "",
+        "langcustomhidden": "",
+        "band": "",
+        "bandhidden": "",
+        "password": "",
+        "payload-response": false,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
+        "x": 436.5,
+        "y": 268,
+        "wires": [
+            [
+                "9eda57d2.86c068"
+            ]
+        ]
+    },
+    {
+        "id": "9eda57d2.86c068",
+        "type": "debug",
+        "z": "5af3bc01.39170c",
         "name": "",
         "active": true,
         "console": "false",
-        "complete": "true",
-        "x": 450,
-        "y": 240,
+        "complete": "false",
+        "x": 730,
+        "y": 220,
         "wires": []
+    },
+    {
+        "id": "e74280f2.d46c8",
+        "type": "link out",
+        "z": "b31e54e4.909fa8",
+        "name": "sendImage",
+        "links": [
+            "d3a5f5cb.481478"
+        ],
+        "x": 378.5,
+        "y": 110,
+        "wires": []
+    },
+    {
+        "id": "d3a5f5cb.481478",
+        "type": "link in",
+        "z": "23350820.888988",
+        "name": "IN_感情認識",
+        "links": [
+            "e74280f2.d46c8"
+        ],
+        "x": 43,
+        "y": 622,
+        "wires": [
+            [
+                "f428841c.a19c78"
+            ]
+        ]
+    },
+    {
+        "id": "a0b190d8.8cd088",
+        "type": "websocket in",
+        "z": "5af3bc01.39170c",
+        "name": "getAudio",
+        "server": "c1f256d0.285b98",
+        "client": "",
+        "x": 155.5,
+        "y": 286,
+        "wires": [
+            [
+                "16212ad7.50dddd"
+            ]
+        ]
     }
 ]
