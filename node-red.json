@@ -1,0 +1,1283 @@
+[
+    {
+        "id": "23350820.888988",
+        "type": "tab",
+        "label": "感情認識",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "15cd476.975e8b9",
+        "type": "tab",
+        "label": "物音認識",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b31e54e4.909fa8",
+        "type": "tab",
+        "label": "master",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "eddaa714.878c58",
+        "type": "tab",
+        "label": "音声コマンド返却",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9c32f896.f45c08",
+        "type": "tab",
+        "label": "白け判定",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c59f1e42.9535a",
+        "type": "tab",
+        "label": "send テスト",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c1f256d0.285b98",
+        "type": "websocket-listener",
+        "z": "",
+        "path": "/websocket/command",
+        "wholemsg": "false"
+    },
+    {
+        "id": "893b7772.dfb328",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "8ff3d195.27633"
+            ]
+        ]
+    },
+    {
+        "id": "a9d78e15.ac389",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 390,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8ff3d195.27633",
+        "type": "template",
+        "z": "23350820.888988",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{name}}, Hello, World",
+        "output": "str",
+        "x": 230,
+        "y": 60,
+        "wires": [
+            [
+                "a9d78e15.ac389"
+            ]
+        ]
+    },
+    {
+        "id": "6cde893f.7aa298",
+        "type": "http in",
+        "z": "23350820.888988",
+        "name": "",
+        "url": "/hello",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 120,
+        "wires": [
+            [
+                "a38c17c3.b91b78"
+            ]
+        ]
+    },
+    {
+        "id": "9865a76a.a48538",
+        "type": "http response",
+        "z": "23350820.888988",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 550,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a38c17c3.b91b78",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "set name",
+        "func": "msg.name = msg.payload.name;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "b811ae3a.2abd7"
+            ]
+        ]
+    },
+    {
+        "id": "b811ae3a.2abd7",
+        "type": "template",
+        "z": "23350820.888988",
+        "name": "hello msg",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{name}}, Hello, World",
+        "output": "str",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "9865a76a.a48538"
+            ]
+        ]
+    },
+    {
+        "id": "71b1a718.f0cbf8",
+        "type": "http in",
+        "z": "23350820.888988",
+        "name": "",
+        "url": "/text2speech",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "f5a39159.aa3ac"
+            ]
+        ]
+    },
+    {
+        "id": "b824b7b3.8b26d8",
+        "type": "watson-text-to-speech",
+        "z": "23350820.888988",
+        "name": "",
+        "lang": "ja-JP",
+        "langhidden": "ja-JP",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "ja-JP_EmiVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "",
+        "payload-response": false,
+        "default-endpoint": false,
+        "service-endpoint": "",
+        "x": 225,
+        "y": 276,
+        "wires": [
+            [
+                "3b038661.a3256a"
+            ]
+        ]
+    },
+    {
+        "id": "317a9297.e6323e",
+        "type": "http response",
+        "z": "23350820.888988",
+        "name": "speech",
+        "statusCode": "",
+        "headers": {
+            "content-type": "audio/wav"
+        },
+        "x": 613,
+        "y": 273,
+        "wires": []
+    },
+    {
+        "id": "3b038661.a3256a",
+        "type": "change",
+        "z": "23350820.888988",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "speech",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 443,
+        "y": 273,
+        "wires": [
+            [
+                "317a9297.e6323e"
+            ]
+        ]
+    },
+    {
+        "id": "f5a39159.aa3ac",
+        "type": "change",
+        "z": "23350820.888988",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.text",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 339,
+        "y": 191,
+        "wires": [
+            [
+                "b824b7b3.8b26d8"
+            ]
+        ]
+    },
+    {
+        "id": "209861b.355f79e",
+        "type": "comment",
+        "z": "23350820.888988",
+        "name": "text2speech",
+        "info": "# Example\n\nnode-red-001.au-syd.mybluemix.net/text2speech?text=水を飲みます",
+        "x": 90,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "85067dc7.884a5",
+        "type": "http request",
+        "z": "23350820.888988",
+        "name": "get web-page-title",
+        "method": "GET",
+        "ret": "txt",
+        "url": "okue.site/api/add?x=1&y=2",
+        "tls": "",
+        "x": 311,
+        "y": 353,
+        "wires": [
+            [
+                "6ee72bce.a1f864"
+            ]
+        ]
+    },
+    {
+        "id": "6e35c143.df2c7",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 91,
+        "y": 353,
+        "wires": [
+            [
+                "85067dc7.884a5"
+            ]
+        ]
+    },
+    {
+        "id": "6ee72bce.a1f864",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 531,
+        "y": 353,
+        "wires": []
+    },
+    {
+        "id": "b5c3751e.c08258",
+        "type": "http in",
+        "z": "15cd476.975e8b9",
+        "name": "物音認識結果のPOST",
+        "url": "/post_sound_events",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 107.5,
+        "y": 241,
+        "wires": [
+            [
+                "c6a56e33.75fce"
+            ]
+        ]
+    },
+    {
+        "id": "c6a56e33.75fce",
+        "type": "change",
+        "z": "15cd476.975e8b9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.event_name",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 326.5,
+        "y": 308,
+        "wires": [
+            [
+                "fe85a5a4.c58ca8",
+                "77dc40e2.0473f"
+            ]
+        ]
+    },
+    {
+        "id": "fe85a5a4.c58ca8",
+        "type": "http response",
+        "z": "15cd476.975e8b9",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 608.5,
+        "y": 209,
+        "wires": []
+    },
+    {
+        "id": "77dc40e2.0473f",
+        "type": "debug",
+        "z": "15cd476.975e8b9",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 550,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "ab96dff9.04d2e",
+        "type": "http in",
+        "z": "23350820.888988",
+        "name": "",
+        "url": "/emotion",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 82,
+        "y": 489,
+        "wires": [
+            [
+                "44042550.388a7c"
+            ]
+        ]
+    },
+    {
+        "id": "465e9629.5e2638",
+        "type": "http response",
+        "z": "23350820.888988",
+        "name": "",
+        "x": 422,
+        "y": 489,
+        "wires": []
+    },
+    {
+        "id": "44042550.388a7c",
+        "type": "template",
+        "z": "23350820.888988",
+        "name": "画像URL入力画面",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<h2>Emotion API Sample</h2>\n<form action=\"/emotion\" method=\"post\">\n    URL<br>\n    <input type=\"text\" name=\"url\" value=\"\"><br>\n    <button type=\"submit\">実行</button>\n</form>\n",
+        "x": 262,
+        "y": 489,
+        "wires": [
+            [
+                "465e9629.5e2638"
+            ]
+        ]
+    },
+    {
+        "id": "889835df.2e0bc8",
+        "type": "http in",
+        "z": "23350820.888988",
+        "name": "",
+        "url": "/emotion",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 92,
+        "y": 549,
+        "wires": [
+            [
+                "2fdb1438.4c16dc"
+            ]
+        ]
+    },
+    {
+        "id": "91b4375f.cf8e68",
+        "type": "http response",
+        "z": "23350820.888988",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1213,
+        "y": 694,
+        "wires": []
+    },
+    {
+        "id": "2fdb1438.4c16dc",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "Header追加",
+        "func": "msg.headers = {\n    \"Content-type\": \"application/json; charset=UTF-8\",\n    \"Ocp-Apim-Subscription-Key\": \"2fb9baa6cfe34c2395fff59da6ac7594\"\n};\n\nmsg.picurl = msg.payload.url;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 262,
+        "y": 549,
+        "wires": [
+            [
+                "5dae3f76.9f11e"
+            ]
+        ]
+    },
+    {
+        "id": "5dae3f76.9f11e",
+        "type": "http request",
+        "z": "23350820.888988",
+        "name": "Call MS EmotionAPI",
+        "method": "POST",
+        "ret": "obj",
+        "url": "https://api.projectoxford.ai/emotion/v1.0/recognize",
+        "tls": "",
+        "x": 452,
+        "y": 609,
+        "wires": [
+            [
+                "7dbbbb9e.dba364"
+            ]
+        ]
+    },
+    {
+        "id": "87ed4386.8e98f",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "ResMsg作成",
+        "func": "//小数点6位までを残す関数 (表情スコアの丸めに利用)\nfunction floatFormat( number ) {\n    return Math.round( number * Math.pow( 10 , 6 ) ) / Math.pow( 10 , 6 ) ;\n}\n\n// Headerの書き換え\nmsg.headers = {\n    \"Content-type\": \"text/html; charset=UTF-8\"\n};\n\nvar result = { 'faceCount': 0, 'emotions': [] };\n\n// payloadの中身を書き換え\nif (msg.result.length > 0) {\n  for (const p of msg.result) {\n    var faceScore = p.scores;\n    result['emotions'].push({\n        'position'  : { 'left': p.faceRectangle['left'],\n                        'top' : p.faceRectangle['top'] },\n        'faceAnger' : floatFormat(faceScore.anger),\n        'faceContempt' :  floatFormat(faceScore.contempt),\n        'faceDisgust' : floatFormat(faceScore.disgust),\n        'faceFear' : floatFormat(faceScore.fear),\n        'faceHappiness' : floatFormat(faceScore.happiness),\n        'faceNeutral' : floatFormat(faceScore.neutral),\n        'faceSadness' : floatFormat(faceScore.sadness),\n        'faceSurprise' : floatFormat(faceScore.surprise)\n    })\n  }\n  result['faceCount'] = msg.result.length;\n}\n\nmsg['result'] = result\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 844,
+        "y": 592,
+        "wires": [
+            [
+                "264c69b7.af1826"
+            ]
+        ]
+    },
+    {
+        "id": "fabe0fb7.b3be2",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 911,
+        "y": 755,
+        "wires": []
+    },
+    {
+        "id": "c45a7baa.038c48",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1246,
+        "y": 750,
+        "wires": []
+    },
+    {
+        "id": "393e552a.ef142a",
+        "type": "switch",
+        "z": "23350820.888988",
+        "name": "認識状況",
+        "property": "result.faceCount",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 923,
+        "y": 694,
+        "wires": [
+            [
+                "4318d9af.d66c38"
+            ],
+            [
+                "2bf201b6.e8000e"
+            ]
+        ]
+    },
+    {
+        "id": "2bf201b6.e8000e",
+        "type": "template",
+        "z": "23350820.888988",
+        "name": "失敗",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Failure...",
+        "x": 1073,
+        "y": 714,
+        "wires": [
+            [
+                "91b4375f.cf8e68",
+                "c45a7baa.038c48"
+            ]
+        ]
+    },
+    {
+        "id": "5a1821e.5ae53e",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "req.files",
+        "x": 227,
+        "y": 756,
+        "wires": []
+    },
+    {
+        "id": "833e7be8.5928a8",
+        "type": "http in",
+        "z": "b31e54e4.909fa8",
+        "name": "画像アップロード",
+        "url": "/sendImage",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "4e6451ee.e6b8e",
+                "45f41fb0.4b526"
+            ]
+        ]
+    },
+    {
+        "id": "4e6451ee.e6b8e",
+        "type": "http response",
+        "z": "b31e54e4.909fa8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "45f41fb0.4b526",
+        "type": "debug",
+        "z": "b31e54e4.909fa8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 310,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e3eb313f.44555",
+        "type": "websocket out",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "server": "c1f256d0.285b98",
+        "client": "",
+        "x": 460,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "986218aa.a8b508",
+        "type": "inject",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "topic": "",
+        "payload": "{\"play\":\"dede-n\",\"speech\":\"遠藤  アウト\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "e3eb313f.44555",
+                "e554007b.e18d3"
+            ]
+        ]
+    },
+    {
+        "id": "e554007b.e18d3",
+        "type": "debug",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 410,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4695e2ab.d153ac",
+        "type": "http in",
+        "z": "23350820.888988",
+        "name": "[POST] /_sendImage",
+        "url": "/_sendImage",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 99,
+        "y": 683,
+        "wires": [
+            [
+                "5a1821e.5ae53e",
+                "f428841c.a19c78"
+            ]
+        ]
+    },
+    {
+        "id": "474fd8e5.313d78",
+        "type": "websocket in",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "server": "c1f256d0.285b98",
+        "client": "",
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "e554007b.e18d3"
+            ]
+        ]
+    },
+    {
+        "id": "f428841c.a19c78",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "Header追加",
+        "func": "msg.headers = {\n    \"Content-type\": \"application/octet-stream\",\n    \"Ocp-Apim-Subscription-Key\": \"2fb9baa6cfe34c2395fff59da6ac7594\"\n};\nmsg.payload = msg.req.files[0].buffer;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 227,
+        "y": 622,
+        "wires": [
+            [
+                "5dae3f76.9f11e",
+                "10117058.c0b73"
+            ]
+        ]
+    },
+    {
+        "id": "10117058.c0b73",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 377.5,
+        "y": 726,
+        "wires": []
+    },
+    {
+        "id": "4318d9af.d66c38",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "成功",
+        "func": "msg.payload = JSON.stringify(msg.result.emotions, null, 2);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1072.5,
+        "y": 657,
+        "wires": [
+            [
+                "91b4375f.cf8e68",
+                "c45a7baa.038c48"
+            ]
+        ]
+    },
+    {
+        "id": "c770674e.d93f58",
+        "type": "cloudant out",
+        "z": "23350820.888988",
+        "name": "insert into jphack",
+        "cloudant": "",
+        "database": "jphack",
+        "service": "node-red-001-cloudantNoSQLDB",
+        "payonly": false,
+        "operation": "insert",
+        "x": 315.5,
+        "y": 935,
+        "wires": []
+    },
+    {
+        "id": "8832df39.82a88",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "田中",
+        "topic": "",
+        "payload": "{\"uid\":0,\"name\":\"田中\",\"position\":{\"left\":494,\"top\":331}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 95.5,
+        "y": 850,
+        "wires": [
+            [
+                "c770674e.d93f58"
+            ]
+        ]
+    },
+    {
+        "id": "397495a1.ca762a",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "山崎",
+        "topic": "",
+        "payload": "{   \"uid\": 3,   \"name\": \"山崎\",   \"position\": { \"left\": 1384, \"top\": 282 } }",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 95,
+        "y": 1005,
+        "wires": [
+            [
+                "c770674e.d93f58"
+            ]
+        ]
+    },
+    {
+        "id": "b2cec0d7.4c74",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "遠藤",
+        "topic": "",
+        "payload": "{   \"uid\": 2,   \"name\": \"遠藤\",   \"position\": { \"left\": 154, \"top\": 320 } }",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 95,
+        "y": 955,
+        "wires": [
+            [
+                "c770674e.d93f58"
+            ]
+        ]
+    },
+    {
+        "id": "8c21c698.cc6db8",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "浜田",
+        "topic": "",
+        "payload": "{   \"uid\": 1,   \"name\": \"浜田\",   \"position\": { \"left\": 1184, \"top\": 259 } }",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 97,
+        "y": 904,
+        "wires": [
+            [
+                "c770674e.d93f58"
+            ]
+        ]
+    },
+    {
+        "id": "511ca7fc.45a718",
+        "type": "http in",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "url": "/tts",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 380,
+        "wires": [
+            [
+                "17dba567.2deb5b"
+            ]
+        ]
+    },
+    {
+        "id": "27d3fceb.e961f4",
+        "type": "watson-text-to-speech",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "lang": "ja-JP",
+        "langhidden": "ja-JP",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "ja-JP_EmiVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "",
+        "payload-response": false,
+        "default-endpoint": false,
+        "service-endpoint": "",
+        "x": 265,
+        "y": 436,
+        "wires": [
+            [
+                "9fd0968c.2307b8"
+            ]
+        ]
+    },
+    {
+        "id": "11002472.8e771c",
+        "type": "http response",
+        "z": "eddaa714.878c58",
+        "name": "speech",
+        "statusCode": "",
+        "headers": {
+            "content-type": "audio/wav"
+        },
+        "x": 653,
+        "y": 433,
+        "wires": []
+    },
+    {
+        "id": "9fd0968c.2307b8",
+        "type": "change",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "speech",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 483,
+        "y": 433,
+        "wires": [
+            [
+                "11002472.8e771c"
+            ]
+        ]
+    },
+    {
+        "id": "17dba567.2deb5b",
+        "type": "change",
+        "z": "eddaa714.878c58",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.text",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 379,
+        "y": 351,
+        "wires": [
+            [
+                "27d3fceb.e961f4"
+            ]
+        ]
+    },
+    {
+        "id": "b742777e.4bb238",
+        "type": "comment",
+        "z": "eddaa714.878c58",
+        "name": "text2speech",
+        "info": "# Example\n\nnode-red-001.au-syd.mybluemix.net/text2speech?text=水を飲みます",
+        "x": 130,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "320127a6.164d88",
+        "type": "cloudant in",
+        "z": "23350820.888988",
+        "name": "get positions",
+        "cloudant": "",
+        "database": "jphack",
+        "service": "node-red-001-cloudantNoSQLDB",
+        "search": "_all_",
+        "design": "",
+        "index": "",
+        "x": 468.5,
+        "y": 860,
+        "wires": [
+            [
+                "751046ea.444678"
+            ]
+        ]
+    },
+    {
+        "id": "d19d56ce.8f9038",
+        "type": "inject",
+        "z": "23350820.888988",
+        "name": "Get All Data",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 300.5,
+        "y": 830,
+        "wires": [
+            [
+                "320127a6.164d88"
+            ]
+        ]
+    },
+    {
+        "id": "751046ea.444678",
+        "type": "debug",
+        "z": "23350820.888988",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 623.5,
+        "y": 893,
+        "wires": []
+    },
+    {
+        "id": "d4169f42.24985",
+        "type": "link in",
+        "z": "9c32f896.f45c08",
+        "name": "facesAndEmotions",
+        "links": [],
+        "x": 198,
+        "y": 171,
+        "wires": [
+            [
+                "ef0e7e68.da4e4"
+            ]
+        ]
+    },
+    {
+        "id": "1e5a3edf.b56c71",
+        "type": "link in",
+        "z": "9c32f896.f45c08",
+        "name": "soundEvents",
+        "links": [],
+        "x": 198,
+        "y": 111,
+        "wires": [
+            [
+                "ef0e7e68.da4e4"
+            ]
+        ]
+    },
+    {
+        "id": "956e5110.df122",
+        "type": "comment",
+        "z": "9c32f896.f45c08",
+        "name": "物音認識",
+        "info": "",
+        "x": 103,
+        "y": 135,
+        "wires": []
+    },
+    {
+        "id": "dd2579a7.b9b408",
+        "type": "comment",
+        "z": "9c32f896.f45c08",
+        "name": "表情認識",
+        "info": "",
+        "x": 101.5,
+        "y": 190,
+        "wires": []
+    },
+    {
+        "id": "ce7dee2f.cf206",
+        "type": "comment",
+        "z": "9c32f896.f45c08",
+        "name": "粗相認識",
+        "info": "",
+        "x": 103,
+        "y": 235,
+        "wires": []
+    },
+    {
+        "id": "ef0e7e68.da4e4",
+        "type": "join",
+        "z": "9c32f896.f45c08",
+        "name": "1秒毎に認識結果を統合",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "1",
+        "count": "",
+        "x": 392,
+        "y": 169,
+        "wires": [
+            [
+                "47cad304.4d0bec"
+            ]
+        ]
+    },
+    {
+        "id": "aee7b76f.943f08",
+        "type": "link in",
+        "z": "9c32f896.f45c08",
+        "name": "sosou",
+        "links": [],
+        "x": 194,
+        "y": 233,
+        "wires": [
+            [
+                "ef0e7e68.da4e4"
+            ]
+        ]
+    },
+    {
+        "id": "47cad304.4d0bec",
+        "type": "function",
+        "z": "9c32f896.f45c08",
+        "name": "デデーン判定(メインロジック)(誰か書いて)",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 501,
+        "y": 208,
+        "wires": [
+            [
+                "6f9d52db.7759cc"
+            ]
+        ]
+    },
+    {
+        "id": "6f9d52db.7759cc",
+        "type": "switch",
+        "z": "9c32f896.f45c08",
+        "name": "もし dede-n オブジェクトが存在したら",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "payload.dede-n",
+                "vt": "msg"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 492,
+        "y": 250,
+        "wires": [
+            [
+                "7b0928a2.0c9978"
+            ]
+        ]
+    },
+    {
+        "id": "7b0928a2.0c9978",
+        "type": "link out",
+        "z": "9c32f896.f45c08",
+        "name": "outSirake",
+        "links": [],
+        "x": 344,
+        "y": 293,
+        "wires": []
+    },
+    {
+        "id": "1bf9a490.86188b",
+        "type": "comment",
+        "z": "9c32f896.f45c08",
+        "name": "デデーン 実行",
+        "info": "",
+        "x": 440,
+        "y": 293,
+        "wires": []
+    },
+    {
+        "id": "1afdfe3a.aebbe2",
+        "type": "cloudant in",
+        "z": "23350820.888988",
+        "name": "get positions",
+        "cloudant": "",
+        "database": "jphack",
+        "service": "node-red-001-cloudantNoSQLDB",
+        "search": "_all_",
+        "design": "",
+        "index": "",
+        "x": 679,
+        "y": 592,
+        "wires": [
+            [
+                "87ed4386.8e98f"
+            ]
+        ]
+    },
+    {
+        "id": "264c69b7.af1826",
+        "type": "function",
+        "z": "23350820.888988",
+        "name": "Who are you?",
+        "func": "\n// 距離が最小な人の名前を返す\nfunction minimumByDist (xs) {\n  var minDist = Infinity\n  var name    = \"\"\n  for (let x of xs) {\n    if ( minDist > x.distance ) {\n      minDist = x.distance\n      name    = x.name\n    }\n  }\n  return name\n}\n\n// データベースにある名前と位置情報\nvar positions = msg.payload.map( x => {\n  return { 'name' : x.payload['name'],\n           'left' : x.payload.position['left'],\n           'top'  : x.payload.position['top']  }\n})\n\n// 写真に移っている人たちについて\nfor (let p of msg.result.emotions) {\n  var l = p.position.left;\n  var t = p.position.top;\n  var tmp = positions.map( x => {\n    return { 'distance': Math.pow(x.left - l, 2) + Math.pow(x.top - t, 2),\n             'name': x.name\n           }\n  })\n  p.name = minimumByDist(tmp)\n  delete p.position\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 693.5,
+        "y": 726,
+        "wires": [
+            [
+                "393e552a.ef142a",
+                "fabe0fb7.b3be2"
+            ]
+        ]
+    },
+    {
+        "id": "7dbbbb9e.dba364",
+        "type": "change",
+        "z": "23350820.888988",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "result",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 544.5,
+        "y": 659,
+        "wires": [
+            [
+                "1afdfe3a.aebbe2"
+            ]
+        ]
+    },
+    {
+        "id": "2cb4e0d3.665b7",
+        "type": "http in",
+        "z": "c59f1e42.9535a",
+        "name": "",
+        "url": "/_sendImage2",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "686cbd41.5b7484",
+                "f813dc29.f7bb"
+            ]
+        ]
+    },
+    {
+        "id": "686cbd41.5b7484",
+        "type": "http response",
+        "z": "c59f1e42.9535a",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 468.5,
+        "y": 148,
+        "wires": []
+    },
+    {
+        "id": "f813dc29.f7bb",
+        "type": "debug",
+        "z": "c59f1e42.9535a",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 450,
+        "y": 240,
+        "wires": []
+    }
+]
