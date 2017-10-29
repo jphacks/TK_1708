@@ -83,7 +83,7 @@ Micrsoft Emotion APIを用いて宴会に参加している人の表情を認識
 * Google CLOUD SPEECH API
 
 #### フレームワーク・ライブラリ・モジュール
-* IBM Node-Red
+* IBM Node-Red (https://node-red-001.au-syd.mybluemix.net/red/)
 * OpenCV
 * Web Socket
 
