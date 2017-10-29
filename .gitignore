@@ -5,4 +5,5 @@
 *.sqlite3
 .stack-work
 *.pyc
+*.DS_Store
 __pycache__

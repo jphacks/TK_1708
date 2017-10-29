@@ -1,4 +1,5 @@
 *.wav
 *.jpg
+deviceid.txt
 __pycache__
 
