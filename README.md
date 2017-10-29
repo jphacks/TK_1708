@@ -1,6 +1,6 @@
 # `絶対にスベってはいけない宴会`
 
-[![Product Name](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
+[![絶対にスベってはいけない宴会](thumb.png)](https://youtu.be/zlKFP9F6Vko)
 
 ## 製品概要
 ### 宴会-Tech
