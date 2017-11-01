@@ -3,6 +3,7 @@
 package.jsonを配置したディレクトリにて
 
 ```
+npm install
 npm start
 ```
 
