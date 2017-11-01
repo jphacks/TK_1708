@@ -1,0 +1,13 @@
+applications:
+- path: .
+  memory: 1024M
+  instances: 2
+  domain: au-syd.mybluemix.net
+  name: node-red-001
+  host: node-red-001
+  disk_quota: 1024M
+  services:
+  - Text to Speech-yc
+  - availability-monitoring-auto
+  - node-red-001-cloudantNoSQLDB
+  - Speech To Text-vt
